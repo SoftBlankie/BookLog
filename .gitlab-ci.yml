@@ -13,6 +13,7 @@ build:
   image: node
   script:
     - echo "Start building App"
+    - cd client
     - npm install
     - npm build
     - echo "Build successfully!"
@@ -27,6 +28,5 @@ test:
   image: node
   script:
     - echo "Testing App"
-    - npm test:coverage
+    - CI=true npm test
     - echo "Test successfully!"
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
