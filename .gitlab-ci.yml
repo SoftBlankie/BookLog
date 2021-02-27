@@ -13,20 +13,19 @@ build:
   image: node
   script:
     - echo "Start building App"
-    - npm install
     - npm install --prefix ./client
     - CI=false npm run build --prefix ./client
     - echo "Build successfully!"
   artifacts:
     expire_in: 1 hour
     paths:
-      - build
-      - node_modules/
+      - ./client/build
+      - ./client/node_modules/
 
 test:
   stage: test
   image: node
   script:
     - echo "Testing App"
-    - CI=true npm test
+    - CI=true npm test --prefix ./client
     - echo "Test successfully!"
