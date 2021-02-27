@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Loader, Nav } from '@components';
 
 const Layout = () => {
   const isHome = location.pathname === '/';
@@ -10,7 +11,7 @@ const Layout = () => {
         <Loader finishLoading={() => setIsLoading(false)} />
       ) : (
         <div>
-
+          <Nav />
         </div>
       )}
     </div>
