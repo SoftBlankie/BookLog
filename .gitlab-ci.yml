@@ -1,16 +1,13 @@
-demo_job_1:
-  tags:
-    - ci
-  script:
-    - echo Hello World
-
 stages:
   - build
   - test
+  - docker-build
 
 build:
   stage: build
   image: node
+  tags:
+    - ci
   script:
     - echo "Start building App"
     - npm install --prefix ./client
@@ -25,7 +22,22 @@ build:
 test:
   stage: test
   image: node
+  tags:
+    - ci
   script:
     - echo "Testing App"
     - CI=true npm test --prefix ./client
     - echo "Test successfully!"
+
+docker-build:
+  stage: docker-build
+  image: docker:latest
+  tags:
+    - ci
+  services:
+    - name: docker:19.03.8-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
