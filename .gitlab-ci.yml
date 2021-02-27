@@ -15,7 +15,7 @@ build:
     - echo "Start building App"
     - npm install
     - npm install --prefix ./client
-    - npm run build --prefix ./client
+    - CI=false npm run build --prefix ./client
     - echo "Build successfully!"
   artifacts:
     expire_in: 1 hour
