@@ -13,9 +13,10 @@ build:
   image: node
   script:
     - echo "Start building App"
-    - cd client
     - npm install
+    - npm install --prefix ./client
     - npm build
+    - npm run build --prefix ./client
     - echo "Build successfully!"
   artifacts:
     expire_in: 1 hour
