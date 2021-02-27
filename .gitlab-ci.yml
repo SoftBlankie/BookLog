@@ -15,7 +15,6 @@ build:
     - echo "Start building App"
     - npm install
     - npm install --prefix ./client
-    - npm build
     - npm run build --prefix ./client
     - echo "Build successfully!"
   artifacts:
