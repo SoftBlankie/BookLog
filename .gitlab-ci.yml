@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  - docker-build
+  - deploy
 
 build:
   stage: build
@@ -29,15 +29,11 @@ test:
     - CI=true npm test --prefix ./client
     - echo "Test successfully!"
 
-docker-build:
-  stage: docker-build
-  image: docker:latest
-  tags:
-    - ci
-  services:
-    - name: docker:19.03.8-dind
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+deploy:
+  stage: deploy
+  only:
+    - production
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" ./client
-    - docker push "$CI_REGISTRY_IMAGE"
+    - sudo apt-get install -y python-pip
+    - pip install docker-compose
+    - docker-compose up -d --build
