@@ -34,8 +34,8 @@ test:
   script:
     - echo "Testing React App"
     - CI=true npm test --prefix ./client
-    - echo "Testing NodeJS App"
-    - CI=true npm test --prefix ./server
+      #- echo "Testing NodeJS App"
+      #- CI=true npm test --prefix ./server
     - echo "Test successfully!"
 
 deploy:
@@ -45,5 +45,5 @@ deploy:
   script:
     - apk add --no-cache docker-compose
     - docker-compose up -d --build
-  environment: main
+  environment: production
   when: manual
