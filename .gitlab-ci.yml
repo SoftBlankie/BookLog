@@ -1,3 +1,8 @@
+image: docker
+
+services:
+  - docker:dind
+
 stages:
   - build
   - test
@@ -14,7 +19,7 @@ build:
     - CI=false npm run build --prefix ./client
     - echo "Build successfully!"
   artifacts:
-    expire_in: 1 hour
+    expire_in: 1 week
     paths:
       - ./client/build
       - ./client/node_modules/
@@ -32,8 +37,10 @@ test:
 deploy:
   stage: deploy
   only:
-    - production
+    - main
   script:
     - sudo apt-get install -y python-pip
     - pip install docker-compose
     - docker-compose up -d --build
+  environment: main
+  when: manual
