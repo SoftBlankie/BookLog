@@ -16,6 +16,7 @@ build:
   script:
     - echo "Start building App"
     - npm install --prefix ./client
+    - npm install --prefix ./server
     - CI=false npm run build --prefix ./client
     - echo "Build successfully!"
   artifacts:
@@ -23,6 +24,7 @@ build:
     paths:
       - ./client/build
       - ./client/node_modules/
+      - ./server/node_modules/
 
 test:
   stage: test
@@ -30,8 +32,10 @@ test:
   tags:
     - ci
   script:
-    - echo "Testing App"
+    - echo "Testing React App"
     - CI=true npm test --prefix ./client
+    - echo "Testing NodeJS App"
+    - CI=true npm test --prefix ./server
     - echo "Test successfully!"
 
 deploy:
@@ -39,8 +43,7 @@ deploy:
   only:
     - main
   script:
-    - sudo apt-get install -y python-pip
-    - pip install docker-compose
+    - apk add --no-cache docker-compose
     - docker-compose up -d --build
   environment: main
   when: manual
