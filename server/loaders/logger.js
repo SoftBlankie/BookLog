@@ -29,4 +29,4 @@ const LoggerInstance = winston.createLogger({
   transports
 });
 
-export default LoggerInstance;
+module.exports = LoggerInstance;

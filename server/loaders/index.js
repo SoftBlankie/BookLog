@@ -1,6 +1,7 @@
 const expressLoader = require('./express');
+const Logger = require('./logger');
 
 module.exports = async function({ expressApp }) {
   await expressLoader({ app: expressApp });
-  console.log('Express Initialized');
+  Logger.info('Express loaded');
 };
